@@ -18,9 +18,6 @@ public class GameUI {
             System.out.println(result.getMessage());
         }
 
-            int guess = Utils.readInt(scanner);
 
-            GuessResult result = engine.makeGuess(guess);
-            System.out.println(result.getMessage());
         }
     }
