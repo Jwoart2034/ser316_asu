@@ -18,3 +18,84 @@
 - Rebase workflow: feature2 rebase onto dev (resolve conflicts per stage) + tests passing
 - Squash workflow: interactive rebase on feature3 (4 commits -> 1) with required message
 - Cherry-pick workflow: hotfix commit onto main, then merge main into dev + tests passing
+
+## Merge vs Rebase vs Squash vs Cherry-pick
+
+### Merge
+- Combines branches by creating a merge commit (unless fast-forward is possible).
+- Preserves the true history of how branches diverged and rejoined.
+- Useful when working on shared branches where history transparency matters.
+- **Tradeoff:** Can clutter history if overused.
+
+### Rebase
+- Replays commits from one branch onto another base commit.
+- Produces a cleaner, more linear commit history.
+- Best used on local or private feature branches.
+- **Tradeoff:** Rewrites commit history and should not be used on shared branches.
+
+### Squash (Interactive Rebase)
+- Combines multiple commits into a single commit.
+- Ideal for cleaning up internal development commits before merging into `dev`.
+- Keeps the main development history concise and readable.
+- **Tradeoff:** Loses detailed step-by-step commit history.
+
+### Cherry-pick
+- Applies a single specific commit onto another branch.
+- Commonly used for urgent hotfixes.
+- Allows fixes to be applied to `main` without merging all of `dev`.
+- **Tradeoff:** Can cause duplicate commits and conflicts if reused incorrectly.
+
+---
+
+## Observations from Feature Branch History
+
+### feature1
+- Used merge commits to integrate work.
+- History clearly shows when feature work was merged back.
+- Preserves full context but adds merge noise.
+
+### feature2
+- Used rebase initially to clean history.
+- Required merging updated `dev` back into the feature as `dev` evolved.
+- Demonstrates that rebasing helps early, but merges may still be necessary later.
+
+### feature3
+- Used squash to combine multiple development commits into one clean commit.
+- Resulted in a single meaningful commit:
+  - **Add hint system to show proximity after 3 attempts**
+- Produced the cleanest integration into `dev`.
+
+---
+
+## When to Use Each Strategy in Real Projects
+
+### Merge
+- When multiple developers share a branch.
+- When preserving integration context is important.
+
+### Rebase
+- When working alone on a feature branch.
+- When preparing a branch for review before merging.
+
+### Squash
+- When internal commits are noisy or experimental.
+- When `dev` history should reflect completed features only.
+
+### Cherry-pick
+- When applying a targeted hotfix to production (`main`).
+- When a fix must be applied without pulling in unrelated changes.
+
+---
+
+## Key Takeaways
+- Feature branches can be messy during development.
+- Before merging into `dev`, history should be cleaned using rebase or squash.
+- Hotfixes applied to `main` must be merged back into `dev` to avoid regressions.
+- A clean and readable `dev` history improves maintainability and collaboration.
+
+---
+
+## Dev Branch Review
+- Feature work is grouped and understandable.
+- Squashed commits reduce noise in `dev`.
+- Hotfixes applied to `main` are merged back into `dev`, keeping branches aligned.
